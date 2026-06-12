@@ -167,7 +167,7 @@ input {
 
 .card-top {
   display: grid;
-  grid-template-columns: 4px minmax(58px, 88px) minmax(0, 1fr) auto;
+  grid-template-columns: 4px minmax(58px, 88px) minmax(0, 1fr);
   align-items: start;
   gap: 18px;
   padding: 22px 18px 20px;
@@ -202,8 +202,16 @@ input {
   min-width: 0;
 }
 
-.type-label {
+.detail-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
   margin: 0 0 6px;
+}
+
+.type-label {
+  margin: 0;
   color: var(--live);
   font-size: 0.72rem;
   font-weight: 850;
@@ -228,15 +236,19 @@ input {
 
 .match-line {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   font-size: 1.18rem;
+  white-space: nowrap;
 }
 
 .team-name {
+  min-width: 0;
   font-weight: 780;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .home-team {
@@ -276,6 +288,7 @@ input {
 }
 
 .channel-badge {
+  flex: 0 0 auto;
   max-width: 148px;
   border-radius: 8px;
   font-size: 0.78rem;
@@ -283,7 +296,9 @@ input {
   line-height: 1.1;
   padding: 8px 10px;
   text-align: center;
-  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .channel-mtv {
@@ -399,7 +414,7 @@ input {
   }
 
   .card-top {
-    grid-template-columns: 4px 64px minmax(0, 1fr) auto;
+    grid-template-columns: 4px 64px minmax(0, 1fr);
     gap: 13px;
     padding: 20px 13px 18px;
   }
@@ -413,8 +428,8 @@ input {
   }
 
   .match-line {
-    gap: 8px;
-    font-size: 1rem;
+    gap: 7px;
+    font-size: clamp(0.78rem, 3.2vw, 1rem);
   }
 
   .result-pill {
@@ -434,7 +449,7 @@ input {
   }
 
   .channel-badge {
-    max-width: 78px;
+    max-width: min(168px, 48vw);
     padding: 7px 8px;
     font-size: 0.72rem;
   }
@@ -454,12 +469,6 @@ input {
   }
 
   .card-top {
-    grid-template-columns: 4px 56px minmax(0, 1fr);
-  }
-
-  .channel-badge {
-    grid-column: 3;
-    justify-self: start;
-    max-width: 100%;
+    grid-template-columns: 4px 52px minmax(0, 1fr);
   }
 }
