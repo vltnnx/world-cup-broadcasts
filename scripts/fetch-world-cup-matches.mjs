@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const API_TOKEN = process.env.FOOTBALL_DATA_API_TOKEN;
+const API_TOKEN = process.env.FOOTBALL_DATA_API_TOKEN || process.env.FOOTBALL_DATA_TOKEN;
 const API_URL = "https://api.football-data.org/v4/competitions/WC/matches";
 const BROADCAST_FILE = path.resolve("public/data/world_cup_finland_broadcasts_simple_corrected.json");
 const OUTFILE = path.resolve("public/data/api-cache/world-cup-matches.json");
@@ -17,7 +17,7 @@ if (!isMatchDay) {
 }
 
 if (!API_TOKEN) {
-  throw new Error("FOOTBALL_DATA_API_TOKEN is required on match days.");
+  throw new Error("FOOTBALL_DATA_API_TOKEN or FOOTBALL_DATA_TOKEN is required on match days.");
 }
 
 const response = await fetch(API_URL, {

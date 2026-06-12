@@ -26,6 +26,7 @@ jobs:
       - name: Fetch football-data.org matches
         env:
           FOOTBALL_DATA_API_TOKEN: ${{ secrets.FOOTBALL_DATA_API_TOKEN }}
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
         run: node scripts/fetch-world-cup-matches.mjs
 
       - name: Commit generated match data

@@ -98,7 +98,27 @@ function normalizeBroadcasts(data) {
 
 function normalizeApiMatches(data) {
   const rows = Array.isArray(data) ? data : data.matches || [];
-  return rows.filter(Boolean);
+  return rows.filter(Boolean).map(normalizeApiMatch);
+}
+
+function normalizeApiMatch(match) {
+  const homeScore = match.home_score ?? match.score?.fullTime?.home ?? match.score?.regularTime?.home ?? null;
+  const awayScore = match.away_score ?? match.score?.fullTime?.away ?? match.score?.regularTime?.away ?? null;
+
+  return {
+    ...match,
+    id: match.id,
+    utcDate: match.utcDate || match.date || match.kickoff || "",
+    status: match.status || "",
+    stage: match.stage || "",
+    group: match.group || "",
+    home_team: match.home_team || match.homeTeam?.name || match.homeTeam?.shortName || "",
+    away_team: match.away_team || match.awayTeam?.name || match.awayTeam?.shortName || "",
+    home_score: homeScore,
+    away_score: awayScore,
+    winner: match.winner || match.score?.winner || "",
+    last_updated: match.last_updated || match.lastUpdated || "",
+  };
 }
 
 function enrichBroadcast(row) {
