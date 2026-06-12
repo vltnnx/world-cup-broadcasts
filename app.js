@@ -117,6 +117,7 @@ function enrichBroadcast(row) {
     title: row.title || (homeTeam && awayTeam ? `${homeTeam} vs ${awayTeam}` : row.title),
     match_status: match.status || "",
     match_state: match.match_state || match.stage || "",
+    match_last_updated: match.last_updated || match.lastUpdated || "",
     score,
     winner: match.winner || match.score?.winner || "",
   };
@@ -291,10 +292,16 @@ function metadata(row) {
   if (row.group) parts.push(`Group ${row.group}`);
   if (row.phase && !parts.includes(row.phase)) parts.push(row.phase);
   if (row.score && !getDisplayTeams(row)) parts.push(row.score);
-  if (row.match_status) parts.push(prettyStatus(row.match_status));
+  if (row.match_status) parts.push(statusLabel(row));
   if (!parts.length && row.type === "highlights") parts.push("Highlights and analysis");
   if (!parts.length && row.type === "rerun") parts.push("Match re-run");
   return parts.join(" · ");
+}
+
+function statusLabel(row) {
+  const status = prettyStatus(row.match_status);
+  const updateTime = formatHelsinkiTime(row.match_last_updated);
+  return updateTime ? `${status} · Updated ${updateTime}` : status;
 }
 
 function groupByDate(rows) {
@@ -330,6 +337,18 @@ function weekdayName(dateString) {
     timeZone: "Europe/Helsinki",
     weekday: "long",
   }).format(new Date(`${dateString}T12:00:00+03:00`));
+}
+
+function formatHelsinkiTime(value) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Helsinki",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(date);
 }
 
 function getFinnishDateString(date) {
