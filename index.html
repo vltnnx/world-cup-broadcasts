@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f7f5">
+    <title>World Cup broadcasts in Finland</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="app-header">
+        <h1>World Cup</h1>
+        <p>broadcasts in Finland</p>
+      </header>
+
+      <nav class="filters" aria-label="Broadcast filters">
+        <button class="filter-pill is-selected" type="button" data-filter="all">All</button>
+        <button class="filter-pill" type="button" data-filter="live">Live matches</button>
+        <button class="filter-pill" type="button" data-filter="highlights">Highlights</button>
+        <button class="filter-pill" type="button" data-filter="rerun">Re-runs</button>
+      </nav>
+
+      <nav class="view-toggle" aria-label="Date view">
+        <button class="view-button is-selected" type="button" data-view="upcoming">Upcoming</button>
+        <button class="view-button" type="button" data-view="past">Past</button>
+      </nav>
+
+      <section id="feed" class="feed" aria-live="polite">
+        <p class="loading">Loading broadcasts...</p>
+      </section>
+
+      <footer class="calendar-note">
+        <span aria-hidden="true">▣</span>
+        <a href="#" id="calendarHelp">Sync reminders to Apple Calendar</a>
+      </footer>
+    </main>
+
+    <template id="dayTemplate">
+      <section class="day-group">
+        <div class="day-heading">
+          <h2></h2>
+          <time></time>
+        </div>
+        <div class="cards"></div>
+      </section>
+    </template>
+
+    <template id="cardTemplate">
+      <article class="broadcast-card">
+        <div class="card-top">
+          <div class="accent" aria-hidden="true"></div>
+          <time class="start-time"></time>
+          <div class="details">
+            <p class="type-label"></p>
+            <h3></h3>
+            <p class="meta"></p>
+          </div>
+          <span class="channel-badge"></span>
+        </div>
+        <div class="card-actions">
+          <label class="watched">
+            <input type="checkbox">
+            <span>Watched</span>
+          </label>
+          <button class="calendar-button" type="button">
+            <span aria-hidden="true">▣</span>
+            <span>Add to Calendar</span>
+          </button>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
