@@ -365,6 +365,7 @@ input {
 
 .calendar-note {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 9px;
@@ -382,6 +383,14 @@ input {
 .calendar-note a:hover,
 .calendar-button:hover {
   color: #000000;
+}
+
+.build-marker {
+  flex-basis: 100%;
+  color: #98a2b3;
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-align: center;
 }
 
 @media (max-width: 760px) {

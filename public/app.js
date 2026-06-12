@@ -10,6 +10,12 @@ const API_URLS = [
   "public/data/api-cache/world-cup-matches.json",
 ];
 
+const BUILD_INFO_URLS = [
+  "/build-info.json",
+  "build-info.json",
+  "public/build-info.json",
+];
+
 const TYPE_LABELS = {
   live: "LIVE MATCH",
   highlights: "HIGHLIGHTS",
@@ -27,6 +33,8 @@ const state = {
   apiMatches: [],
   filter: "all",
   view: "upcoming",
+  buildVersion: "local",
+  buildInfo: null,
   watched: new Set(JSON.parse(localStorage.getItem("worldCupWatched") || "[]")),
   revealedResults: new Set(JSON.parse(localStorage.getItem("worldCupRevealedResults") || "[]")),
 };
@@ -40,6 +48,10 @@ const viewButtons = document.querySelectorAll(".view-button");
 init();
 
 async function init() {
+  state.buildInfo = await loadBuildInfo();
+  state.buildVersion = state.buildInfo?.version || state.buildInfo?.sha || "local";
+  renderBuildMarker();
+
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       state.filter = button.dataset.filter;
@@ -64,8 +76,8 @@ async function init() {
 
   try {
     const [broadcastData, apiData] = await Promise.all([
-      fetchFirstJson(BROADCAST_URLS),
-      fetchFirstJson(API_URLS).catch(() => ({ matches: [] })),
+      fetchFirstJson(BROADCAST_URLS, { versioned: true }),
+      fetchFirstJson(API_URLS, { versioned: true }).catch(() => ({ matches: [] })),
     ]);
     state.apiMatches = normalizeApiMatches(apiData);
     state.broadcasts = normalizeBroadcasts(broadcastData);
@@ -75,18 +87,42 @@ async function init() {
   }
 }
 
-async function fetchFirstJson(urls) {
+async function loadBuildInfo() {
+  return fetchFirstJson(BUILD_INFO_URLS, {
+    cacheBust: String(Date.now()),
+    optional: true,
+  });
+}
+
+function renderBuildMarker() {
+  const marker = document.querySelector("#buildMarker");
+  if (!marker) return;
+
+  const sha = state.buildInfo?.short_sha || String(state.buildVersion).slice(0, 7);
+  const builtAt = state.buildInfo?.built_at ? ` · ${formatBuildTime(state.buildInfo.built_at)}` : "";
+  marker.textContent = `Build ${sha}${builtAt}`;
+}
+
+async function fetchFirstJson(urls, options = {}) {
   let lastError;
   for (const url of urls) {
     try {
-      const response = await fetch(url, { cache: "no-cache" });
+      const response = await fetch(versionedUrl(url, options), { cache: "no-cache" });
       if (response.ok) return response.json();
       lastError = new Error(`${url}: ${response.status}`);
     } catch (error) {
       lastError = error;
     }
   }
+  if (options.optional) return null;
   throw lastError;
+}
+
+function versionedUrl(url, options = {}) {
+  const version = options.cacheBust || (options.versioned ? state.buildVersion : "");
+  if (!version || version === "local") return url;
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}v=${encodeURIComponent(version)}`;
 }
 
 function normalizeBroadcasts(data) {
@@ -378,6 +414,19 @@ function formatHelsinkiTime(value) {
   if (Number.isNaN(date.getTime())) return "";
   return new Intl.DateTimeFormat("en-GB", {
     timeZone: "Europe/Helsinki",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(date);
+}
+
+function formatBuildTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Helsinki",
+    day: "2-digit",
+    month: "short",
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,

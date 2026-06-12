@@ -30,10 +30,31 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare Pages artifact
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -R public/. _site/
+          BUILD_TIME="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          SHORT_SHA="${GITHUB_SHA::7}"
+          cat > _site/build-info.json <<EOF
+          {
+            "version": "${GITHUB_SHA}",
+            "sha": "${GITHUB_SHA}",
+            "short_sha": "${SHORT_SHA}",
+            "built_at": "${BUILD_TIME}",
+            "ref": "${GITHUB_REF_NAME}",
+            "run_id": "${GITHUB_RUN_ID}"
+          }
+          EOF
+          sed -i "s/__BUILD_VERSION__/${GITHUB_SHA}/g" _site/index.html
+          echo "Prepared Pages artifact for ${SHORT_SHA} at ${BUILD_TIME}"
+          find _site -maxdepth 3 -type f | sort
+
       - name: Upload static files
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

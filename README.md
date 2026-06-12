@@ -24,7 +24,9 @@ The update workflow runs every 5 minutes. It checks `public/data/world_cup_finla
 
 ## GitHub Pages
 
-The deployment workflow publishes the `public` directory, so the app is served from the same root where `/data/world_cup_finland_broadcasts_simple_corrected.json` lives.
+The deployment workflow prepares a static `_site` artifact from `public` and publishes that artifact with GitHub Pages. There is no npm build or `dist` directory in this app.
+
+During deployment, the workflow writes `_site/build-info.json` and injects the current commit SHA into the `app.js` query string. The app shows a small build marker in the footer and uses the build version to cache-bust JSON data requests.
 
 ## Local Preview
 
