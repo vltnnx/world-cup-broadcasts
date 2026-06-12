@@ -28,6 +28,7 @@ const state = {
   filter: "all",
   view: "upcoming",
   watched: new Set(JSON.parse(localStorage.getItem("worldCupWatched") || "[]")),
+  revealedResults: new Set(JSON.parse(localStorage.getItem("worldCupRevealedResults") || "[]")),
 };
 
 const feed = document.querySelector("#feed");
@@ -237,12 +238,13 @@ function renderTitle(titleNode, row) {
   }
 
   const result = formatResult(row.score);
+  const resultIsRevealed = result.hasScore && state.revealedResults.has(row.id);
 
   titleNode.classList.add("match-line");
   titleNode.innerHTML = "";
   titleNode.append(
     createMatchPart("team-name home-team", teams.home),
-    createMatchPart(`result-pill${result.hasScore ? " has-result" : ""}`, result.text),
+    createResultPart(row, result, resultIsRevealed),
     createMatchPart("team-name away-team", teams.away),
   );
 }
@@ -252,6 +254,28 @@ function createMatchPart(className, text) {
   part.className = className;
   part.textContent = text;
   return part;
+}
+
+function createResultPart(row, result, resultIsRevealed) {
+  if (!result.hasScore) {
+    return createMatchPart("result-pill", "vs");
+  }
+
+  if (resultIsRevealed) {
+    return createMatchPart("result-pill has-result", result.text);
+  }
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "result-pill result-toggle";
+  button.textContent = "show";
+  button.setAttribute("aria-label", `Show result for ${titleFromTeams(row)}`);
+  button.addEventListener("click", () => {
+    state.revealedResults.add(row.id);
+    localStorage.setItem("worldCupRevealedResults", JSON.stringify([...state.revealedResults]));
+    button.replaceWith(createMatchPart("result-pill has-result", result.text));
+  });
+  return button;
 }
 
 function channelClass(channel) {
@@ -266,7 +290,7 @@ function metadata(row) {
   const parts = [];
   if (row.group) parts.push(`Group ${row.group}`);
   if (row.phase && !parts.includes(row.phase)) parts.push(row.phase);
-  if (row.score && row.type !== "live") parts.push(row.score);
+  if (row.score && !getDisplayTeams(row)) parts.push(row.score);
   if (row.match_status) parts.push(prettyStatus(row.match_status));
   if (!parts.length && row.type === "highlights") parts.push("Highlights and analysis");
   if (!parts.length && row.type === "rerun") parts.push("Match re-run");
