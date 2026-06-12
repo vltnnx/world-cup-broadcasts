@@ -167,26 +167,10 @@ input {
 
 .card-top {
   display: grid;
-  grid-template-columns: 4px minmax(58px, 88px) minmax(0, 1fr);
-  align-items: start;
+  grid-template-columns: minmax(58px, 88px) minmax(0, 1fr);
+  align-items: center;
   gap: 18px;
   padding: 22px 18px 20px;
-}
-
-.accent {
-  width: 4px;
-  height: 40px;
-  border-radius: 999px;
-  background: var(--live);
-  align-self: center;
-}
-
-.broadcast-card[data-type="highlights"] .accent {
-  background: var(--highlights);
-}
-
-.broadcast-card[data-type="rerun"] .accent {
-  background: var(--rerun);
 }
 
 .start-time {
@@ -194,7 +178,6 @@ input {
   font-size: 1.55rem;
   font-weight: 760;
   line-height: 1;
-  padding-top: 5px;
   white-space: nowrap;
 }
 
@@ -414,7 +397,7 @@ input {
   }
 
   .card-top {
-    grid-template-columns: 4px 64px minmax(0, 1fr);
+    grid-template-columns: 64px minmax(0, 1fr);
     gap: 13px;
     padding: 20px 13px 18px;
   }
@@ -469,6 +452,6 @@ input {
   }
 
   .card-top {
-    grid-template-columns: 4px 52px minmax(0, 1fr);
+    grid-template-columns: 52px minmax(0, 1fr);
   }
 }
