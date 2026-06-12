@@ -488,7 +488,10 @@ function formatResult(score) {
 }
 
 function normalizeTeam(team) {
-  return String(team || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  return String(team || "")
+    .toLowerCase()
+    .replace(/\band\b/g, "")
+    .replace(/[^a-z0-9]/g, "");
 }
 
 function getApiMatchDate(match) {
