@@ -320,8 +320,21 @@ function metadata(row) {
 
 function statusLabel(row) {
   const status = prettyStatus(row.match_status);
+  if (!isActiveMatchStatus(row.match_status)) return status;
+
   const updateTime = formatHelsinkiTime(row.match_last_updated);
   return updateTime ? `${status} · Updated ${updateTime}` : status;
+}
+
+function isActiveMatchStatus(status) {
+  return [
+    "IN_PLAY",
+    "LIVE",
+    "PAUSED",
+    "EXTRA_TIME",
+    "PENALTY_SHOOTOUT",
+    "BREAK",
+  ].includes(String(status || "").toUpperCase());
 }
 
 function groupByDate(rows) {
