@@ -3,7 +3,7 @@ name: Update World Cup match enrichment
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: write
@@ -25,11 +25,11 @@ jobs:
 
       - name: Fetch football-data.org matches
         env:
-          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          FOOTBALL_DATA_API_TOKEN: ${{ secrets.FOOTBALL_DATA_API_TOKEN }}
         run: node scripts/fetch-world-cup-matches.mjs
 
       - name: Commit generated match data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update World Cup match enrichment"
-          file_pattern: public/data/world_cup_matches_api.json
+          file_pattern: public/data/api-cache/world-cup-matches.json

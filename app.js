@@ -5,9 +5,9 @@ const BROADCAST_URLS = [
 ];
 
 const API_URLS = [
-  "/data/world_cup_matches_api.json",
-  "data/world_cup_matches_api.json",
-  "public/data/world_cup_matches_api.json",
+  "/data/api-cache/world-cup-matches.json",
+  "data/api-cache/world-cup-matches.json",
+  "public/data/api-cache/world-cup-matches.json",
 ];
 
 const TYPE_LABELS = {
