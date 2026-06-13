@@ -29,7 +29,7 @@ const DEFAULT_DURATIONS = {
 const state = {
   broadcasts: [],
   apiMatches: [],
-  filter: "all",
+  filters: new Set(["all"]),
   view: "upcoming",
   buildVersion: "local",
   buildInfo: null,
@@ -52,11 +52,12 @@ async function init() {
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      state.filter = button.dataset.filter;
-      filterButtons.forEach((item) => item.classList.toggle("is-selected", item === button));
+      toggleTypeFilter(button.dataset.filter);
+      syncFilterButtons();
       render();
     });
   });
+  syncFilterButtons();
 
   viewButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -238,7 +239,7 @@ function render() {
 function getVisibleRows() {
   const today = getFinnishDateString(new Date());
   return state.broadcasts
-    .filter((row) => state.filter === "all" || row.type === state.filter)
+    .filter((row) => state.filters.has("all") || state.filters.has(row.type))
     .filter((row) => (state.view === "past" ? row.date < today : row.date >= today))
     .sort((a, b) => {
       if (a.date !== b.date) {
@@ -246,6 +247,33 @@ function getVisibleRows() {
       }
       return a.start.localeCompare(b.start);
     });
+}
+
+function toggleTypeFilter(filter) {
+  if (filter === "all") {
+    state.filters.clear();
+    state.filters.add("all");
+    return;
+  }
+
+  state.filters.delete("all");
+  if (state.filters.has(filter)) {
+    state.filters.delete(filter);
+  } else {
+    state.filters.add(filter);
+  }
+
+  if (!state.filters.size) {
+    state.filters.add("all");
+  }
+}
+
+function syncFilterButtons() {
+  filterButtons.forEach((button) => {
+    const selected = state.filters.has(button.dataset.filter);
+    button.classList.toggle("is-selected", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
 }
 
 function createCard(row) {
