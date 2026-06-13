@@ -14,25 +14,25 @@
         <img class="app-banner" src="img/wc-banner.png" alt="">
       </header>
 
-      <nav class="filters" aria-label="Broadcast filters">
-        <button class="filter-pill is-selected" type="button" data-filter="all">All</button>
-        <button class="filter-pill" type="button" data-filter="live">Live matches</button>
-        <button class="filter-pill" type="button" data-filter="highlights">Highlights</button>
-        <button class="filter-pill" type="button" data-filter="rerun">Re-runs</button>
-      </nav>
+      <div class="sticky-controls">
+        <nav class="filters" aria-label="Broadcast filters">
+          <button class="filter-pill is-selected" type="button" data-filter="all">All</button>
+          <button class="filter-pill" type="button" data-filter="live">Live matches</button>
+          <button class="filter-pill" type="button" data-filter="highlights">Highlights</button>
+          <button class="filter-pill" type="button" data-filter="rerun">Re-runs</button>
+        </nav>
 
-      <nav class="view-toggle" aria-label="Date view">
-        <button class="view-button is-selected" type="button" data-view="upcoming">Upcoming</button>
-        <button class="view-button" type="button" data-view="past">Past</button>
-      </nav>
+        <nav class="view-toggle" aria-label="Date view">
+          <button class="view-button is-selected" type="button" data-view="upcoming">Upcoming</button>
+          <button class="view-button" type="button" data-view="past">Past</button>
+        </nav>
+      </div>
 
       <section id="feed" class="feed" aria-live="polite">
         <p class="loading">Loading broadcasts...</p>
       </section>
 
       <footer class="calendar-note">
-        <span aria-hidden="true">▣</span>
-        <a href="#" id="calendarHelp">Sync reminders to Apple Calendar</a>
         <span id="buildMarker" class="build-marker">Build local</span>
       </footer>
     </main>

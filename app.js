@@ -67,12 +67,6 @@ async function init() {
     });
   });
 
-  document.querySelector("#calendarHelp").addEventListener("click", (event) => {
-    event.preventDefault();
-    const firstUpcoming = getVisibleRows()[0];
-    if (firstUpcoming) downloadIcs(firstUpcoming);
-  });
-
   try {
     const [broadcastData, apiData] = await Promise.all([
       fetchFirstJson(BROADCAST_URLS, { versioned: true }),
