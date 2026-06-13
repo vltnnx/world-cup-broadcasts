@@ -47,7 +47,7 @@ jobs:
             "run_id": "${GITHUB_RUN_ID}"
           }
           EOF
-          sed -i "s/__BUILD_VERSION__/${GITHUB_SHA}/g" _site/index.html
+          sed -i -E "s/app\\.js\\?v=[^\"]+/app.js?v=${GITHUB_SHA}/g" _site/index.html
           echo "Prepared Pages artifact for ${SHORT_SHA} at ${BUILD_TIME}"
           find _site -maxdepth 3 -type f | sort
 

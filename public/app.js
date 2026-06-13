@@ -29,7 +29,7 @@ const DEFAULT_DURATIONS = {
 const state = {
   broadcasts: [],
   apiMatches: [],
-  filters: new Set(["all"]),
+  filters: loadStoredFilters(),
   view: "upcoming",
   buildVersion: "local",
   buildInfo: null,
@@ -247,6 +247,7 @@ function toggleTypeFilter(filter) {
   if (filter === "all") {
     state.filters.clear();
     state.filters.add("all");
+    saveStoredFilters();
     return;
   }
 
@@ -260,6 +261,8 @@ function toggleTypeFilter(filter) {
   if (!state.filters.size) {
     state.filters.add("all");
   }
+
+  saveStoredFilters();
 }
 
 function syncFilterButtons() {
@@ -268,6 +271,22 @@ function syncFilterButtons() {
     button.classList.toggle("is-selected", selected);
     button.setAttribute("aria-pressed", String(selected));
   });
+}
+
+function loadStoredFilters() {
+  try {
+    const allowed = new Set(["all", "live", "highlights", "rerun"]);
+    const stored = JSON.parse(localStorage.getItem("worldCupFilters") || "[]");
+    const filters = new Set(stored.filter((item) => allowed.has(item)));
+    if (!filters.size || filters.has("all")) return new Set(["all"]);
+    return filters;
+  } catch (error) {
+    return new Set(["all"]);
+  }
+}
+
+function saveStoredFilters() {
+  localStorage.setItem("worldCupFilters", JSON.stringify([...state.filters]));
 }
 
 function createCard(row) {
