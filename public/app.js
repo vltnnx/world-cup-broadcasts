@@ -5,9 +5,7 @@ const BROADCAST_URLS = [
 ];
 
 const API_URLS = [
-  "/data/api-cache/world-cup-matches.json",
-  "data/api-cache/world-cup-matches.json",
-  "public/data/api-cache/world-cup-matches.json",
+  "https://raw.githubusercontent.com/vltnnx/world-cup-broadcasts/refs/heads/main/public/data/api-cache/world-cup-matches.json",
 ];
 
 const BUILD_INFO_URLS = [
@@ -77,7 +75,7 @@ async function init() {
   try {
     const [broadcastData, apiData] = await Promise.all([
       fetchFirstJson(BROADCAST_URLS, { versioned: true }),
-      fetchFirstJson(API_URLS, { versioned: true }).catch(() => ({ matches: [] })),
+      fetchFirstJson(API_URLS, { cacheBust: String(Date.now()) }).catch(() => ({ matches: [] })),
     ]);
     state.apiMatches = normalizeApiMatches(apiData);
     state.broadcasts = normalizeBroadcasts(broadcastData);
