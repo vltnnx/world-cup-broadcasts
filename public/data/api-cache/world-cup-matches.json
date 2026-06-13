@@ -373,7 +373,7 @@
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_C",
-      "lastUpdated": "2026-06-13T22:44:38Z",
+      "lastUpdated": "2026-06-13T23:48:35Z",
       "homeTeam": {
         "id": 764,
         "name": "Brazil",
@@ -396,8 +396,8 @@
           "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         }
       },
       "odds": {
