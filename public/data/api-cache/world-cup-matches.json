@@ -6,7 +6,7 @@
     "count": 104,
     "first": "2026-06-11",
     "last": "2026-07-19",
-    "played": 6
+    "played": 8
   },
   "competition": {
     "id": 2000,
@@ -435,11 +435,11 @@
       },
       "id": 537340,
       "utcDate": "2026-06-14T01:00:00Z",
-      "status": "PAUSED",
+      "status": "FINISHED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_C",
-      "lastUpdated": "2026-06-14T01:57:56Z",
+      "lastUpdated": "2026-06-14T03:09:14Z",
       "homeTeam": {
         "id": 836,
         "name": "Haiti",
@@ -501,11 +501,11 @@
       },
       "id": 537346,
       "utcDate": "2026-06-14T04:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_D",
-      "lastUpdated": "2026-06-13T15:20:17Z",
+      "lastUpdated": "2026-06-14T06:03:26Z",
       "homeTeam": {
         "id": 779,
         "name": "Australia",
@@ -521,15 +521,15 @@
         "crest": "https://crests.football-data.org/803.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         }
       },
       "odds": {
