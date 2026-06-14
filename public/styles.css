@@ -294,11 +294,14 @@ input {
 }
 
 .result-toggle {
+  background: #fff3bf;
+  color: #8a5a00;
   cursor: pointer;
 }
 
 .result-toggle:hover {
-  color: #111827;
+  background: #ffe8a3;
+  color: #6f4700;
 }
 
 .result-pill.has-result {
@@ -390,6 +393,15 @@ input {
 
 .broadcast-card.is-watched .watched input {
   accent-color: var(--live);
+}
+
+.broadcast-card.is-linked-watched .watched {
+  background: #dff5e9;
+  color: #087443;
+}
+
+.broadcast-card.is-linked-watched .watched input {
+  accent-color: #17b26a;
 }
 
 .calendar-button {

@@ -120,9 +120,10 @@ function versionedUrl(url, options = {}) {
 
 function normalizeBroadcasts(data) {
   const rows = Array.isArray(data) ? data : data.broadcasts || [];
-  return rows
+  const enrichedRows = rows
     .filter((row) => row && row.id && row.date && row.start)
     .map((row) => enrichBroadcast(row));
+  return linkRepeatedMatchData(enrichedRows);
 }
 
 function normalizeApiMatches(data) {
@@ -170,6 +171,31 @@ function enrichBroadcast(row) {
     score,
     winner: match.winner || match.score?.winner || "",
   };
+}
+
+function linkRepeatedMatchData(rows) {
+  const liveMatches = new Map();
+
+  rows.forEach((row) => {
+    const key = getMatchKey(row);
+    if (row.type === "live" && key) liveMatches.set(key, row);
+  });
+
+  return rows.map((row) => {
+    const key = getMatchKey(row);
+    const liveRow = key ? liveMatches.get(key) : null;
+    if (!liveRow || liveRow.id === row.id) return row;
+
+    return {
+      ...row,
+      api_match_id: row.api_match_id || liveRow.api_match_id || "",
+      match_status: row.match_status || liveRow.match_status || "",
+      match_state: row.match_state || liveRow.match_state || "",
+      match_last_updated: row.match_last_updated || liveRow.match_last_updated || "",
+      score: row.score || liveRow.score || "",
+      winner: row.winner || liveRow.winner || "",
+    };
+  });
 }
 
 function findApiMatch(row) {
@@ -293,9 +319,12 @@ function createCard(row) {
   const node = cardTemplate.content.cloneNode(true);
   const card = node.querySelector(".broadcast-card");
   const watchedInput = node.querySelector("input");
+  const watchedLabel = node.querySelector(".watched span");
+  const watchedState = getWatchedState(row);
 
   card.dataset.type = row.type;
-  card.classList.toggle("is-watched", state.watched.has(row.id));
+  card.classList.toggle("is-watched", watchedState.kind === "direct");
+  card.classList.toggle("is-linked-watched", watchedState.kind === "linked");
   node.querySelector(".start-time").textContent = row.start;
   node.querySelector(".type-label").textContent = TYPE_LABELS[row.type] || row.type.toUpperCase();
   renderTitle(node.querySelector("h3"), row);
@@ -304,15 +333,16 @@ function createCard(row) {
   channelBadge.textContent = row.channel;
   channelBadge.classList.add(channelClass(row.channel));
 
-  watchedInput.checked = state.watched.has(row.id);
+  watchedInput.checked = watchedState.isWatched;
+  watchedLabel.textContent = watchedState.label;
   watchedInput.addEventListener("change", () => {
     if (watchedInput.checked) {
       state.watched.add(row.id);
     } else {
-      state.watched.delete(row.id);
+      clearWatchedForMatch(row);
     }
     localStorage.setItem("worldCupWatched", JSON.stringify([...state.watched]));
-    card.classList.toggle("is-watched", watchedInput.checked);
+    render();
   });
 
   node.querySelector(".calendar-button").addEventListener("click", () => downloadIcs(row));
@@ -334,7 +364,7 @@ function renderTitle(titleNode, row) {
   }
 
   const result = formatResult(row.score);
-  const resultIsRevealed = result.hasScore && state.revealedResults.has(row.id);
+  const resultIsRevealed = result.hasScore && isResultRevealed(row);
 
   titleNode.classList.add("match-line");
   titleNode.innerHTML = "";
@@ -367,11 +397,68 @@ function createResultPart(row, result, resultIsRevealed) {
   button.textContent = "show";
   button.setAttribute("aria-label", `Show result for ${titleFromTeams(row)}`);
   button.addEventListener("click", () => {
-    state.revealedResults.add(row.id);
+    state.revealedResults.add(getResultKey(row));
     localStorage.setItem("worldCupRevealedResults", JSON.stringify([...state.revealedResults]));
-    button.replaceWith(createMatchPart("result-pill has-result", result.text));
+    render();
   });
   return button;
+}
+
+function getWatchedState(row) {
+  if (state.watched.has(row.id)) {
+    return { isWatched: true, kind: "direct", label: "Watched" };
+  }
+
+  const linkedRow = getLinkedWatchedRow(row);
+  if (!linkedRow) {
+    return { isWatched: false, kind: "none", label: "Watched" };
+  }
+
+  return {
+    isWatched: true,
+    kind: "linked",
+    label: linkedRow.type === "live" ? "Watched (live)" : "Watched (re-run)",
+  };
+}
+
+function getLinkedWatchedRow(row) {
+  const key = getMatchKey(row);
+  if (!key) return null;
+
+  return state.broadcasts.find((candidate) => {
+    return candidate.id !== row.id
+      && candidate.type !== row.type
+      && state.watched.has(candidate.id)
+      && getMatchKey(candidate) === key;
+  }) || null;
+}
+
+function clearWatchedForMatch(row) {
+  const key = getMatchKey(row);
+  state.watched.delete(row.id);
+  if (!key) return;
+
+  state.broadcasts.forEach((candidate) => {
+    if (getMatchKey(candidate) === key) state.watched.delete(candidate.id);
+  });
+}
+
+function isResultRevealed(row) {
+  if (state.revealedResults.has(row.id) || state.revealedResults.has(getResultKey(row))) return true;
+
+  const key = getMatchKey(row);
+  if (!key) return false;
+
+  return state.broadcasts.some((candidate) => {
+    return candidate.id !== row.id
+      && getMatchKey(candidate) === key
+      && state.revealedResults.has(candidate.id);
+  });
+}
+
+function getResultKey(row) {
+  if (row.api_match_id) return `api:${row.api_match_id}`;
+  return getMatchKey(row) || row.id;
 }
 
 function channelClass(channel) {
@@ -593,6 +680,21 @@ function normalizeTeam(team) {
     .toLowerCase()
     .replace(/\band\b/g, "")
     .replace(/[^a-z0-9]/g, "");
+}
+
+function getMatchKey(row) {
+  if (!["live", "rerun"].includes(row.type)) return "";
+  const teams = getDisplayTeams(row);
+  const home = normalizeTeam(teams?.home);
+  const away = normalizeTeam(teams?.away);
+  if (!home || !away || home === "tbd" || away === "tbd") return "";
+
+  return [
+    normalizePhase(row.phase),
+    normalizeTeam(row.group),
+    home,
+    away,
+  ].join("|");
 }
 
 function getApiMatchDate(match) {
