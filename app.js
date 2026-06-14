@@ -34,6 +34,7 @@ const state = {
   buildVersion: "local",
   buildInfo: null,
   watched: new Set(JSON.parse(localStorage.getItem("worldCupWatched") || "[]")),
+  calendarAdded: new Set(JSON.parse(localStorage.getItem("worldCupCalendarAdded") || "[]")),
   revealedResults: new Set(JSON.parse(localStorage.getItem("worldCupRevealedResults") || "[]")),
 };
 
@@ -345,9 +346,28 @@ function createCard(row) {
     render();
   });
 
-  node.querySelector(".calendar-button").addEventListener("click", () => downloadIcs(row));
+  const calendarButton = node.querySelector(".calendar-button");
+  syncCalendarButton(calendarButton, row);
+  calendarButton.addEventListener("click", () => {
+    if (state.calendarAdded.has(row.id)) {
+      state.calendarAdded.delete(row.id);
+    } else {
+      downloadIcs(row);
+      state.calendarAdded.add(row.id);
+    }
+
+    localStorage.setItem("worldCupCalendarAdded", JSON.stringify([...state.calendarAdded]));
+    syncCalendarButton(calendarButton, row);
+  });
 
   return node;
+}
+
+function syncCalendarButton(button, row) {
+  const isAdded = state.calendarAdded.has(row.id);
+  button.classList.toggle("is-added", isAdded);
+  button.setAttribute("aria-pressed", String(isAdded));
+  button.querySelector("span:last-child").textContent = isAdded ? "Added to Calendar" : "Add to Calendar";
 }
 
 function renderTitle(titleNode, row) {

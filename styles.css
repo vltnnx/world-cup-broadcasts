@@ -409,6 +409,11 @@ input {
   background: transparent;
   cursor: pointer;
   padding: 0 10px;
+  transition: color 160ms ease;
+}
+
+.calendar-button.is-added {
+  color: var(--live);
 }
 
 .calendar-note {
@@ -431,6 +436,10 @@ input {
 .calendar-note a:hover,
 .calendar-button:hover {
   color: #000000;
+}
+
+.calendar-button.is-added:hover {
+  color: #087443;
 }
 
 .build-marker {
