@@ -6,7 +6,7 @@
     "count": 104,
     "first": "2026-06-11",
     "last": "2026-07-19",
-    "played": 9
+    "played": 10
   },
   "competition": {
     "id": 2000,
@@ -633,11 +633,11 @@
       },
       "id": 537357,
       "utcDate": "2026-06-14T20:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_F",
-      "lastUpdated": "2026-06-14T21:39:49Z",
+      "lastUpdated": "2026-06-14T22:01:31Z",
       "homeTeam": {
         "id": 8601,
         "name": "Netherlands",
@@ -653,11 +653,11 @@
         "crest": "https://crests.football-data.org/766.svg"
       },
       "score": {
-        "winner": "HOME_TEAM",
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
           "home": 2,
-          "away": 1
+          "away": 2
         },
         "halfTime": {
           "home": 0,
@@ -733,14 +733,7 @@
       "odds": {
         "msg": "Activate Odds-Package in User-Panel to retrieve odds."
       },
-      "referees": [
-        {
-          "id": 43918,
-          "name": "François Letexier",
-          "type": "REFEREE",
-          "nationality": "France"
-        }
-      ]
+      "referees": []
     },
     {
       "area": {
