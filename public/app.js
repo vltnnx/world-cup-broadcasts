@@ -144,7 +144,9 @@ function normalizeApiMatch(match) {
     stage: match.stage || "",
     group: match.group || "",
     home_team: match.home_team || match.homeTeam?.name || match.homeTeam?.shortName || "",
+    home_team_tla: match.home_team_tla || match.homeTeam?.tla || "",
     away_team: match.away_team || match.awayTeam?.name || match.awayTeam?.shortName || "",
+    away_team_tla: match.away_team_tla || match.awayTeam?.tla || "",
     home_score: homeScore,
     away_score: awayScore,
     winner: match.winner || match.score?.winner || "",
@@ -164,7 +166,9 @@ function enrichBroadcast(row) {
     ...row,
     api_match_id: row.api_match_id || String(match.id || ""),
     home_team: homeTeam,
+    home_team_tla: row.home_team_tla || match.home_team_tla || match.homeTeam?.tla || "",
     away_team: awayTeam,
+    away_team_tla: row.away_team_tla || match.away_team_tla || match.awayTeam?.tla || "",
     title: row.title || (homeTeam && awayTeam ? `${homeTeam} vs ${awayTeam}` : row.title),
     match_status: match.status || "",
     match_state: match.match_state || match.stage || "",
@@ -190,6 +194,8 @@ function linkRepeatedMatchData(rows) {
     return {
       ...row,
       api_match_id: row.api_match_id || liveRow.api_match_id || "",
+      home_team_tla: row.home_team_tla || liveRow.home_team_tla || "",
+      away_team_tla: row.away_team_tla || liveRow.away_team_tla || "",
       match_status: row.match_status || liveRow.match_status || "",
       match_state: row.match_state || liveRow.match_state || "",
       match_last_updated: row.match_last_updated || liveRow.match_last_updated || "",
@@ -210,6 +216,18 @@ function findApiMatch(row) {
   const rowDate = row.date;
   const home = normalizeTeam(row.home_team);
   const away = normalizeTeam(row.away_team);
+  const homeTla = normalizeTla(row.home_team_tla);
+  const awayTla = normalizeTla(row.away_team_tla);
+
+  if (homeTla && awayTla && rowDate && row.phase) {
+    const byTla = state.apiMatches.find((match) => {
+      const matchDate = getApiMatchDate(match);
+      return matchDate === rowDate
+        && normalizeTla(match.home_team_tla || match.homeTeam?.tla) === homeTla
+        && normalizeTla(match.away_team_tla || match.awayTeam?.tla) === awayTla;
+    });
+    if (byTla) return byTla;
+  }
 
   if (home && away && rowDate && row.phase) {
     const byTeams = state.apiMatches.find((match) => {
@@ -702,8 +720,23 @@ function normalizeTeam(team) {
     .replace(/[^a-z0-9]/g, "");
 }
 
+function normalizeTla(tla) {
+  return String(tla || "").trim().toUpperCase();
+}
+
 function getMatchKey(row) {
   if (!["live", "rerun"].includes(row.type)) return "";
+  const homeTla = normalizeTla(row.home_team_tla);
+  const awayTla = normalizeTla(row.away_team_tla);
+  if (homeTla && awayTla) {
+    return [
+      normalizePhase(row.phase),
+      normalizeTeam(row.group),
+      homeTla,
+      awayTla,
+    ].join("|");
+  }
+
   const teams = getDisplayTeams(row);
   const home = normalizeTeam(teams?.home);
   const away = normalizeTeam(teams?.away);
