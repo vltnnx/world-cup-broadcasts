@@ -1095,11 +1095,11 @@
       },
       "id": 537391,
       "utcDate": "2026-06-16T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_I",
-      "lastUpdated": "2026-06-15T15:20:14Z",
+      "lastUpdated": "2026-06-16T20:26:52Z",
       "homeTeam": {
         "id": 773,
         "name": "France",
@@ -1115,15 +1115,15 @@
         "crest": "https://crests.football-data.org/senegal.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         }
       },
       "odds": {
@@ -1195,7 +1195,14 @@
       "odds": {
         "msg": "Activate Odds-Package in User-Panel to retrieve odds."
       },
-      "referees": []
+      "referees": [
+        {
+          "id": 276648,
+          "name": "Pierre Atcho",
+          "type": "REFEREE",
+          "nationality": "Gabon"
+        }
+      ]
     },
     {
       "area": {
