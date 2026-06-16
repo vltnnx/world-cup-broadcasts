@@ -47,6 +47,11 @@ input {
 }
 
 .app-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   margin-bottom: 10px;
   padding: 8px 0 0;
 }
@@ -57,6 +62,105 @@ input {
   max-height: 88px;
   object-fit: contain;
   object-position: left center;
+}
+
+.watch-menu {
+  position: relative;
+  z-index: 50;
+  flex: 0 0 auto;
+}
+
+.watch-menu-button {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  border: 1px solid rgba(13, 13, 15, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 6px 20px rgba(20, 18, 16, 0.08);
+  cursor: pointer;
+  padding: 6px;
+}
+
+.watch-menu-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.watch-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  max-width: calc(100vw - 36px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 16px 42px rgba(20, 18, 16, 0.16);
+}
+
+.watch-menu-link {
+  display: grid;
+  grid-template-columns: 29px minmax(0, max-content) 14px;
+  align-items: center;
+  gap: 9px;
+  min-height: 58px;
+  color: var(--text);
+  text-decoration: none;
+  padding: 10px 12px;
+}
+
+.watch-menu-link + .watch-menu-link {
+  border-top: 1px solid var(--line);
+}
+
+.watch-menu-logo {
+  display: block;
+  width: 29px;
+  height: 29px;
+  object-fit: contain;
+}
+
+.watch-menu-logo-yle {
+  border-radius: 8px;
+}
+
+.watch-menu-text {
+  display: grid;
+  width: max-content;
+  max-width: 190px;
+  min-width: 0;
+  gap: 2px;
+}
+
+.watch-menu-title {
+  overflow: hidden;
+  font-size: 0.72rem;
+  font-weight: 850;
+  line-height: 1.14;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.watch-menu-subtitle {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.watch-menu-external {
+  display: block;
+  width: 14px;
+  height: 14px;
+  opacity: 0.68;
 }
 
 .sticky-controls {
@@ -186,6 +290,29 @@ input {
   font-size: 0.9rem;
   font-weight: 650;
   white-space: nowrap;
+}
+
+.finished-today-toggle {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  color: #4d596c;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.35;
+  padding: 0;
+}
+
+.finished-today-toggle[hidden] {
+  display: none;
+}
+
+.finished-today-toggle:hover {
+  color: #111827;
 }
 
 .cards {
@@ -462,8 +589,18 @@ input {
   }
 
   .app-banner {
-    width: min(351px, 86vw);
+    width: min(351px, calc(100vw - 104px));
     max-height: 78px;
+  }
+
+  .watch-menu-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 11px;
+  }
+
+  .watch-menu-panel {
+    max-width: calc(100vw - 40px);
   }
 
   .filter-pill {
@@ -507,6 +644,7 @@ input {
   }
 
   .meta,
+  .finished-today-toggle,
   .watched,
   .calendar-button {
     font-size: 0.78rem;

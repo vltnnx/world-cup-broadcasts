@@ -31,6 +31,7 @@ const state = {
   apiMatches: [],
   filters: loadStoredFilters(),
   view: "upcoming",
+  showFinishedToday: false,
   buildVersion: "local",
   buildInfo: null,
   watched: new Set(JSON.parse(localStorage.getItem("worldCupWatched") || "[]")),
@@ -43,10 +44,15 @@ const dayTemplate = document.querySelector("#dayTemplate");
 const cardTemplate = document.querySelector("#cardTemplate");
 const filterButtons = document.querySelectorAll(".filter-pill");
 const viewButtons = document.querySelectorAll(".view-button");
+const watchMenu = document.querySelector(".watch-menu");
+const watchMenuButton = document.querySelector(".watch-menu-button");
+const watchMenuPanel = document.querySelector("#watchMenu");
 
 init();
 
 async function init() {
+  setupWatchMenu();
+
   state.buildInfo = await loadBuildInfo();
   state.buildVersion = state.buildInfo?.version || state.buildInfo?.sha || "local";
   renderBuildMarker();
@@ -79,6 +85,33 @@ async function init() {
   } catch (error) {
     feed.innerHTML = `<p class="error">Broadcast data could not be loaded.</p>`;
   }
+}
+
+function setupWatchMenu() {
+  if (!watchMenu || !watchMenuButton || !watchMenuPanel) return;
+
+  watchMenuButton.addEventListener("click", () => {
+    setWatchMenuOpen(watchMenuPanel.hidden);
+  });
+
+  watchMenuPanel.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setWatchMenuOpen(false));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (watchMenuPanel.hidden || watchMenu.contains(event.target)) return;
+    setWatchMenuOpen(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setWatchMenuOpen(false);
+  });
+}
+
+function setWatchMenuOpen(isOpen) {
+  if (!watchMenuButton || !watchMenuPanel) return;
+  watchMenuPanel.hidden = !isOpen;
+  watchMenuButton.setAttribute("aria-expanded", String(isOpen));
 }
 
 async function loadBuildInfo() {
@@ -258,6 +291,7 @@ function findApiMatch(row) {
 
 function render() {
   const rows = getVisibleRows();
+  const today = getFinnishDateString(new Date());
   feed.innerHTML = "";
 
   if (!rows.length) {
@@ -269,8 +303,26 @@ function render() {
     const dayNode = dayTemplate.content.cloneNode(true);
     dayNode.querySelector("h2").textContent = dayLabel(date);
     dayNode.querySelector("time").textContent = formatDate(date);
+    const finishedTodayRows = date === today && state.view === "upcoming"
+      ? broadcasts.filter((row) => isHideableFinishedToday(row, today))
+      : [];
+    const visibleBroadcasts = finishedTodayRows.length && !state.showFinishedToday
+      ? broadcasts.filter((row) => !finishedTodayRows.some((finishedRow) => finishedRow.id === row.id))
+      : broadcasts;
+    const finishedTodayToggle = dayNode.querySelector(".finished-today-toggle");
+    if (finishedTodayRows.length) {
+      finishedTodayToggle.hidden = false;
+      finishedTodayToggle.setAttribute("aria-expanded", String(state.showFinishedToday));
+      finishedTodayToggle.querySelector(".finished-today-label").textContent = state.showFinishedToday
+        ? "hide finished today"
+        : "show finished today";
+      finishedTodayToggle.addEventListener("click", () => {
+        state.showFinishedToday = !state.showFinishedToday;
+        render();
+      });
+    }
     const cards = dayNode.querySelector(".cards");
-    broadcasts.forEach((row) => cards.appendChild(createCard(row)));
+    visibleBroadcasts.forEach((row) => cards.appendChild(createCard(row)));
     feed.appendChild(dayNode);
   }
 }
@@ -535,6 +587,36 @@ function isActiveMatchStatus(status) {
     "PENALTY_SHOOTOUT",
     "BREAK",
   ].includes(String(status || "").toUpperCase());
+}
+
+function isHideableFinishedToday(row, today) {
+  return row.date === today
+    && row.type === "live"
+    && String(row.match_status || "").toUpperCase() === "FINISHED"
+    && isPastFinishedGrace(row);
+}
+
+function isPastFinishedGrace(row) {
+  const finishUpdatedAt = new Date(row.match_last_updated || "");
+  const graceMs = 30 * 60 * 1000;
+
+  if (!Number.isNaN(finishUpdatedAt.getTime())) {
+    return Date.now() - finishUpdatedAt.getTime() >= graceMs;
+  }
+
+  const fallbackEnd = getBroadcastFallbackFinish(row);
+  return fallbackEnd ? Date.now() - fallbackEnd.getTime() >= graceMs : false;
+}
+
+function getBroadcastFallbackFinish(row) {
+  const minutesAfterStart = row.end ? 0 : DEFAULT_DURATIONS.live;
+  const time = row.end || row.start;
+  if (!row.date || !time) return null;
+  const [year, month, day] = row.date.split("-").map(Number);
+  const [hours, mins] = time.split(":").map(Number);
+  if (![year, month, day, hours, mins].every(Number.isFinite)) return null;
+  const dayOffset = row.end && row.end <= row.start ? 1 : 0;
+  return new Date(Date.UTC(year, month - 1, day + dayOffset, hours - 3, mins + minutesAfterStart));
 }
 
 function groupByDate(rows) {

@@ -12,6 +12,30 @@
       <header class="app-header">
         <h1 class="sr-only">World Cup</h1>
         <img class="app-banner" src="img/wc-banner.png" alt="">
+        <div class="watch-menu">
+          <button class="watch-menu-button" type="button" aria-expanded="false" aria-controls="watchMenu">
+            <span class="sr-only">Open watch links</span>
+            <img src="img/play.png" alt="" aria-hidden="true">
+          </button>
+          <div id="watchMenu" class="watch-menu-panel" hidden>
+            <a class="watch-menu-link" href="https://areena.yle.fi/tv/ohjelmat/57-dJ7koL672" target="_blank" rel="noopener noreferrer">
+              <img class="watch-menu-logo watch-menu-logo-yle" src="img/yle-logo.png" alt="">
+              <span class="watch-menu-text">
+                <span class="watch-menu-title">Yle Areena</span>
+                <span class="watch-menu-subtitle">Lives, re-runs &amp; highlights</span>
+              </span>
+              <img class="watch-menu-external" src="img/new-tab.png" alt="" aria-hidden="true">
+            </a>
+            <a class="watch-menu-link" href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/highlights" target="_blank" rel="noopener noreferrer">
+              <img class="watch-menu-logo" src="img/fifa-logo.png" alt="">
+              <span class="watch-menu-text">
+                <span class="watch-menu-title">FIFA.com</span>
+                <span class="watch-menu-subtitle">Highlights</span>
+              </span>
+              <img class="watch-menu-external" src="img/new-tab.png" alt="" aria-hidden="true">
+            </a>
+          </div>
+        </div>
       </header>
 
       <div class="sticky-controls">
@@ -43,6 +67,9 @@
           <h2></h2>
           <time></time>
         </div>
+        <button class="finished-today-toggle" type="button" hidden>
+          <span class="finished-today-label">show finished today</span>
+        </button>
         <div class="cards"></div>
       </section>
     </template>
@@ -73,6 +100,6 @@
       </article>
     </template>
 
-    <script src="app.js?v=dev-20260616-1" defer></script>
+    <script src="app.js?v=dev-20260616-4" defer></script>
   </body>
 </html>
