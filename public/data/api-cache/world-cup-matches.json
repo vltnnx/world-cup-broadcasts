@@ -1891,7 +1891,7 @@
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_D",
-      "lastUpdated": "2026-06-20T08:25:00Z",
+      "lastUpdated": "2026-06-20T08:25:01Z",
       "homeTeam": {
         "id": 771,
         "name": "United States",
@@ -2217,11 +2217,11 @@
       },
       "id": 537353,
       "utcDate": "2026-06-20T20:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_E",
-      "lastUpdated": "2026-06-16T15:20:15Z",
+      "lastUpdated": "2026-06-20T20:21:58Z",
       "homeTeam": {
         "id": 759,
         "name": "Germany",
@@ -2237,11 +2237,11 @@
         "crest": "https://crests.football-data.org/787.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
