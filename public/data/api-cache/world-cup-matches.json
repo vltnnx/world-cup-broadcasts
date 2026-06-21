@@ -6,7 +6,7 @@
     "count": 104,
     "first": "2026-06-11",
     "last": "2026-07-19",
-    "played": 37
+    "played": 38
   },
   "competition": {
     "id": 2000,
@@ -2419,7 +2419,7 @@
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_H",
-      "lastUpdated": "2026-06-21T18:07:46Z",
+      "lastUpdated": "2026-06-21T20:36:54Z",
       "homeTeam": {
         "id": 760,
         "name": "Spain",
@@ -2438,7 +2438,7 @@
         "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 5,
+          "home": 4,
           "away": 0
         },
         "halfTime": {
@@ -2481,11 +2481,11 @@
       },
       "id": 537365,
       "utcDate": "2026-06-21T19:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_G",
-      "lastUpdated": "2026-06-21T19:56:25Z",
+      "lastUpdated": "2026-06-21T21:06:37Z",
       "homeTeam": {
         "id": 805,
         "name": "Belgium",
@@ -2501,15 +2501,15 @@
         "crest": "https://crests.football-data.org/iran.svg"
       },
       "score": {
-        "winner": "AWAY_TEAM",
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
           "home": 0,
-          "away": 1
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         }
       },
       "odds": {
@@ -2581,7 +2581,14 @@
       "odds": {
         "msg": "Activate Odds-Package in User-Panel to retrieve odds."
       },
-      "referees": []
+      "referees": [
+        {
+          "id": 215543,
+          "name": "Espen Eskås",
+          "type": "REFEREE",
+          "nationality": "Norway"
+        }
+      ]
     },
     {
       "area": {
