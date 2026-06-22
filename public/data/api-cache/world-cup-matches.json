@@ -6,7 +6,7 @@
     "count": 104,
     "first": "2026-06-11",
     "last": "2026-07-19",
-    "played": 39
+    "played": 40
   },
   "competition": {
     "id": 2000,
@@ -2419,7 +2419,7 @@
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_H",
-      "lastUpdated": "2026-06-21T20:36:54Z",
+      "lastUpdated": "2026-06-22T03:25:01Z",
       "homeTeam": {
         "id": 760,
         "name": "Spain",
@@ -2485,7 +2485,7 @@
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_G",
-      "lastUpdated": "2026-06-21T21:06:37Z",
+      "lastUpdated": "2026-06-22T03:25:01Z",
       "homeTeam": {
         "id": 805,
         "name": "Belgium",
@@ -2551,7 +2551,7 @@
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_H",
-      "lastUpdated": "2026-06-22T00:10:40Z",
+      "lastUpdated": "2026-06-22T03:25:01Z",
       "homeTeam": {
         "id": 758,
         "name": "Uruguay",
@@ -2613,11 +2613,11 @@
       },
       "id": 537366,
       "utcDate": "2026-06-22T01:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_G",
-      "lastUpdated": "2026-06-22T02:11:34Z",
+      "lastUpdated": "2026-06-22T03:25:01Z",
       "homeTeam": {
         "id": 783,
         "name": "New Zealand",
@@ -2633,11 +2633,11 @@
         "crest": "https://crests.football-data.org/825.svg"
       },
       "score": {
-        "winner": "HOME_TEAM",
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
           "home": 1,
-          "away": 0
+          "away": 3
         },
         "halfTime": {
           "home": 1,
