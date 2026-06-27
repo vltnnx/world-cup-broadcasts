@@ -3593,7 +3593,7 @@
       "matchday": 3,
       "stage": "GROUP_STAGE",
       "group": "GROUP_E",
-      "lastUpdated": "2026-06-26T07:48:25Z",
+      "lastUpdated": "2026-06-26T10:54:12Z",
       "homeTeam": {
         "id": 791,
         "name": "Ecuador",
@@ -3659,7 +3659,7 @@
       "matchday": 3,
       "stage": "GROUP_STAGE",
       "group": "GROUP_E",
-      "lastUpdated": "2026-06-26T07:48:25Z",
+      "lastUpdated": "2026-06-26T10:54:12Z",
       "homeTeam": {
         "id": 9460,
         "name": "Curaçao",
@@ -3725,7 +3725,7 @@
       "matchday": 3,
       "stage": "GROUP_STAGE",
       "group": "GROUP_F",
-      "lastUpdated": "2026-06-26T07:48:25Z",
+      "lastUpdated": "2026-06-26T10:54:16Z",
       "homeTeam": {
         "id": 802,
         "name": "Tunisia",
@@ -3791,7 +3791,7 @@
       "matchday": 3,
       "stage": "GROUP_STAGE",
       "group": "GROUP_F",
-      "lastUpdated": "2026-06-26T07:48:25Z",
+      "lastUpdated": "2026-06-26T10:54:16Z",
       "homeTeam": {
         "id": 766,
         "name": "Japan",
@@ -3857,7 +3857,7 @@
       "matchday": 3,
       "stage": "GROUP_STAGE",
       "group": "GROUP_D",
-      "lastUpdated": "2026-06-26T07:48:25Z",
+      "lastUpdated": "2026-06-26T10:54:20Z",
       "homeTeam": {
         "id": 803,
         "name": "Turkey",
@@ -3923,7 +3923,7 @@
       "matchday": 3,
       "stage": "GROUP_STAGE",
       "group": "GROUP_D",
-      "lastUpdated": "2026-06-26T07:48:25Z",
+      "lastUpdated": "2026-06-26T10:54:19Z",
       "homeTeam": {
         "id": 761,
         "name": "Paraguay",
@@ -4117,11 +4117,11 @@
       },
       "id": 537373,
       "utcDate": "2026-06-27T00:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 3,
       "stage": "GROUP_STAGE",
       "group": "GROUP_H",
-      "lastUpdated": "2026-06-26T07:48:25Z",
+      "lastUpdated": "2026-06-27T01:24:35Z",
       "homeTeam": {
         "id": 758,
         "name": "Uruguay",
@@ -4137,15 +4137,15 @@
         "crest": "https://crests.football-data.org/760.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         }
       },
       "odds": {
@@ -4183,11 +4183,11 @@
       },
       "id": 537374,
       "utcDate": "2026-06-27T00:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 3,
       "stage": "GROUP_STAGE",
       "group": "GROUP_H",
-      "lastUpdated": "2026-06-26T07:48:25Z",
+      "lastUpdated": "2026-06-27T01:25:11Z",
       "homeTeam": {
         "id": 1930,
         "name": "Cape Verde Islands",
@@ -4203,15 +4203,15 @@
         "crest": "https://crests.football-data.org/saudi_arabia.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         }
       },
       "odds": {
@@ -4283,7 +4283,14 @@
       "odds": {
         "msg": "Activate Odds-Package in User-Panel to retrieve odds."
       },
-      "referees": []
+      "referees": [
+        {
+          "id": 129250,
+          "name": "Adham Makhadmeh",
+          "type": "REFEREE",
+          "nationality": "Jordan"
+        }
+      ]
     },
     {
       "area": {
@@ -4342,7 +4349,14 @@
       "odds": {
         "msg": "Activate Odds-Package in User-Panel to retrieve odds."
       },
-      "referees": []
+      "referees": [
+        {
+          "id": 43888,
+          "name": "Szymon Marciniak",
+          "type": "REFEREE",
+          "nationality": "Poland"
+        }
+      ]
     },
     {
       "area": {
