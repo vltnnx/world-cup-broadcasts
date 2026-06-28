@@ -30,9 +30,10 @@ if (!response.ok) {
   throw new Error(`football-data.org request failed: ${response.status} ${response.statusText}`);
 }
 
-const payload = await response.json();
-const nextContent = `${JSON.stringify(payload, null, 2)}\n`;
 const currentContent = await fs.readFile(OUTFILE, "utf8").catch(() => "");
+const currentPayload = parseJson(currentContent);
+const payload = mergeMatchCache(await response.json(), currentPayload);
+const nextContent = `${JSON.stringify(payload, null, 2)}\n`;
 
 if (nextContent === currentContent) {
   console.log(`football-data.org cache is unchanged for ${today}.`);
@@ -51,4 +52,46 @@ function getFinnishDateString(date) {
     month: "2-digit",
     day: "2-digit",
   }).format(date);
+}
+
+function parseJson(content) {
+  if (!content) return null;
+  try {
+    return JSON.parse(content);
+  } catch (error) {
+    console.warn("Existing football-data.org cache could not be parsed; replacing it.");
+    return null;
+  }
+}
+
+function mergeMatchCache(nextPayload, currentPayload) {
+  if (!Array.isArray(nextPayload?.matches) || !Array.isArray(currentPayload?.matches)) {
+    return nextPayload;
+  }
+
+  const previousMatches = new Map(currentPayload.matches.map((match) => [String(match.id), match]));
+
+  return {
+    ...nextPayload,
+    matches: nextPayload.matches.map((match) => mergeMatch(match, previousMatches.get(String(match.id)))),
+  };
+}
+
+function mergeMatch(nextMatch, previousMatch) {
+  if (!previousMatch) return nextMatch;
+
+  return {
+    ...nextMatch,
+    homeTeam: preserveKnownTeam(nextMatch.homeTeam, previousMatch.homeTeam),
+    awayTeam: preserveKnownTeam(nextMatch.awayTeam, previousMatch.awayTeam),
+  };
+}
+
+function preserveKnownTeam(nextTeam, previousTeam) {
+  if (hasTeamIdentity(nextTeam) || !hasTeamIdentity(previousTeam)) return nextTeam;
+  return previousTeam;
+}
+
+function hasTeamIdentity(team) {
+  return Boolean(team?.id || team?.name || team?.shortName || team?.tla);
 }
