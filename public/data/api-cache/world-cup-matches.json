@@ -6,7 +6,7 @@
     "count": 104,
     "first": "2026-06-11",
     "last": "2026-07-19",
-    "played": 77
+    "played": 76
   },
   "competition": {
     "id": 2000,
@@ -5065,7 +5065,7 @@
       },
       "id": 537424,
       "utcDate": "2026-06-30T17:00:00Z",
-      "status": "FINISHED",
+      "status": "TIMED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -5085,15 +5085,15 @@
         "crest": "https://crests.football-data.org/813.svg"
       },
       "score": {
-        "winner": "AWAY_TEAM",
+        "winner": null,
         "duration": "REGULAR",
         "fullTime": {
-          "home": 1,
-          "away": 2
+          "home": null,
+          "away": null
         },
         "halfTime": {
-          "home": 0,
-          "away": 1
+          "home": null,
+          "away": null
         }
       },
       "odds": {
@@ -5131,11 +5131,11 @@
       },
       "id": 537416,
       "utcDate": "2026-06-30T21:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
-      "lastUpdated": "2026-06-29T15:20:12Z",
+      "lastUpdated": "2026-06-30T21:40:09Z",
       "homeTeam": {
         "id": 773,
         "name": "France",
@@ -5151,11 +5151,11 @@
         "crest": "https://crests.football-data.org/792.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
