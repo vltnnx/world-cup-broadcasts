@@ -5065,11 +5065,11 @@
       },
       "id": 537424,
       "utcDate": "2026-06-30T17:00:00Z",
-      "status": "FINISHED",
+      "status": "TIMED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
-      "lastUpdated": "2026-06-30T19:04:39Z",
+      "lastUpdated": "2026-06-30T19:12:59Z",
       "homeTeam": {
         "id": 1935,
         "name": "Ivory Coast",
@@ -5085,15 +5085,15 @@
         "crest": "https://crests.football-data.org/813.svg"
       },
       "score": {
-        "winner": "AWAY_TEAM",
+        "winner": null,
         "duration": "REGULAR",
         "fullTime": {
-          "home": 1,
-          "away": 2
+          "home": null,
+          "away": null
         },
         "halfTime": {
-          "home": 0,
-          "away": 1
+          "home": null,
+          "away": null
         }
       },
       "odds": {
@@ -5197,11 +5197,11 @@
       },
       "id": 537425,
       "utcDate": "2026-07-01T01:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
-      "lastUpdated": "2026-06-29T15:20:12Z",
+      "lastUpdated": "2026-07-01T04:07:36Z",
       "homeTeam": {
         "id": 769,
         "name": "Mexico",
@@ -5217,15 +5217,15 @@
         "crest": "https://crests.football-data.org/791.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         }
       },
       "odds": {
