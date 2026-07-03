@@ -6,7 +6,7 @@
     "count": 104,
     "first": "2026-06-11",
     "last": "2026-07-19",
-    "played": 84
+    "played": 85
   },
   "competition": {
     "id": 2000,
@@ -5539,7 +5539,7 @@
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
-      "lastUpdated": "2026-07-03T01:17:51Z",
+      "lastUpdated": "2026-07-03T01:22:34Z",
       "homeTeam": {
         "id": 765,
         "name": "Portugal",
@@ -5555,11 +5555,11 @@
         "crest": "https://crests.football-data.org/799.svg"
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
           "home": 2,
-          "away": 2
+          "away": 1
         },
         "halfTime": {
           "home": 0,
@@ -5601,11 +5601,11 @@
       },
       "id": 537429,
       "utcDate": "2026-07-03T03:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
-      "lastUpdated": "2026-07-02T05:20:12Z",
+      "lastUpdated": "2026-07-03T05:01:24Z",
       "homeTeam": {
         "id": 788,
         "name": "Switzerland",
@@ -5621,15 +5621,15 @@
         "crest": "https://crests.football-data.org/algeria.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         }
       },
       "odds": {
