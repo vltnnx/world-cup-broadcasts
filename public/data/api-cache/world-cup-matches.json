@@ -5889,7 +5889,7 @@
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
-      "lastUpdated": "2026-07-04T17:19:00Z",
+      "lastUpdated": "2026-07-04T18:16:00Z",
       "homeTeam": {
         "id": 828,
         "name": "Canada",
@@ -5912,8 +5912,8 @@
           "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         }
       },
       "odds": {
