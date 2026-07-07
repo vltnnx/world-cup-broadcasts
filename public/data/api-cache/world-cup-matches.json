@@ -6347,11 +6347,11 @@
       },
       "id": 537382,
       "utcDate": "2026-07-07T20:00:00Z",
-      "status": "IN_PLAY",
+      "status": "PAUSED",
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
-      "lastUpdated": "2026-07-07T21:42:45Z",
+      "lastUpdated": "2026-07-07T22:40:31Z",
       "homeTeam": {
         "id": 788,
         "name": "Switzerland",
@@ -6368,12 +6368,20 @@
       },
       "score": {
         "winner": "DRAW",
-        "duration": "REGULAR",
+        "duration": "EXTRA_TIME",
         "fullTime": {
           "home": 0,
           "away": 0
         },
         "halfTime": {
+          "home": 0,
+          "away": 0
+        },
+        "regularTime": {
+          "home": null,
+          "away": null
+        },
+        "extraTime": {
           "home": 0,
           "away": 0
         }
