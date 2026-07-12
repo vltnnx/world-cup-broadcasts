@@ -6,7 +6,7 @@
     "count": 104,
     "first": "2026-06-11",
     "last": "2026-07-19",
-    "played": 97
+    "played": 98
   },
   "competition": {
     "id": 2000,
@@ -6557,11 +6557,11 @@
       },
       "id": 537385,
       "utcDate": "2026-07-11T21:00:00Z",
-      "status": "PAUSED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": null,
-      "lastUpdated": "2026-07-11T23:40:19Z",
+      "lastUpdated": "2026-07-11T23:53:31Z",
       "homeTeam": {
         "id": 8872,
         "name": "Norway",
@@ -6631,11 +6631,11 @@
       },
       "id": 537386,
       "utcDate": "2026-07-12T01:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": null,
-      "lastUpdated": "2026-07-11T05:20:09Z",
+      "lastUpdated": "2026-07-12T01:11:46Z",
       "homeTeam": {
         "id": 762,
         "name": "Argentina",
@@ -6651,11 +6651,11 @@
         "crest": "https://crests.football-data.org/788.svg"
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
