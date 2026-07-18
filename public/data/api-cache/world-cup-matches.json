@@ -6837,11 +6837,11 @@
       },
       "id": 537389,
       "utcDate": "2026-07-18T21:00:00Z",
-      "status": "IN_PLAY",
+      "status": "PAUSED",
       "matchday": null,
       "stage": "THIRD_PLACE",
       "group": null,
-      "lastUpdated": "2026-07-18T21:22:24Z",
+      "lastUpdated": "2026-07-18T21:56:00Z",
       "homeTeam": {
         "id": 773,
         "name": "France",
@@ -6861,11 +6861,11 @@
         "duration": "REGULAR",
         "fullTime": {
           "home": 0,
-          "away": 1
+          "away": 4
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 4
         }
       },
       "odds": {
